@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import App from '../src/components/App';
@@ -8,7 +8,7 @@ describe('App', () => {
   it('renders App component', async () => {
     render(<App />);
 
-    /****** Search Types */
+    /*---------- SEARCH TYPES ----------*/
     /** getByText **/
     // fails
     //expect(screen.getByText('Search')).toBeInTheDocument();
@@ -22,7 +22,7 @@ describe('App', () => {
     /** getByRole **/
     expect(screen.getByRole('textbox')).toBeInTheDocument();
 
-    /****** Search Variants */
+    /*---------- SEARCH VARIANTS ----------*/
     /** queryBy */
     //So every time you are asserting that an element isn't there, use queryBy
     expect(screen.queryByText(/Searches for JavaScript/)).toBeNull();
@@ -41,6 +41,38 @@ describe('App', () => {
         -findAllBy
       Whereas all of them return an array of elements and can be associated with the search types again.
      */
+
+    /*---------- FIRE EVENT ----------*/
+    // screen.debug();
+
+    // fireEvent.change(screen.getByRole('textbox'), {
+    //   target: { value: 'JavaScript' },
+    // });
+
+    // screen.debug();
+
+    /*** wait for the user to resolve with async */
+    // await screen.findByText(/Signed in as/);
+
+    // expect(screen.queryByText(/Searches for JavaScript/)).toBeNull();
+
+    // fireEvent.change(screen.getByRole('textbox'), {
+    //   target: { value: 'JavaScript' },
+    // });
+
+    // expect(screen.getByText(/Searches for JavaScript/)).toBeInTheDocument();
+    /*** wait for async update with waitFor function */
+    expect(screen.queryByText(/Searches for JavaScript/)).toBeNull();
+
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: 'JavaScript' },
+    });
+
+    waitFor(() =>
+      expect(
+        screen.getByText(/Searches for JavaScript/)
+      ).toBeInTheDocument()
+    );
   });
 });
 describe('true is truthy and false is falsy', () => {
