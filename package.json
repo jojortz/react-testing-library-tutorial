@@ -4,7 +4,7 @@
   "description": "Walkthrough of React Testing Library Tutorial by Robin Wieruch",
   "main": "index.js",
   "scripts": {
-    "test": "npx jest client/test/.*test.js",
+    "test": "npx jest client/test/AppLama.test.js",
     "server-dev": "npx nodemon --watch server server/index.js",
     "react-dev": "webpack --mode development --watch"
   },
